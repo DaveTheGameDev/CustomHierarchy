@@ -1,5 +1,7 @@
 # Custom-Hierarchy
 
+* To use download/clone into editor folder.
+
 ![Show Case](/images/showcase.png)
 
 * Adds a custom header gameobject (Any gameobject that name starts ---).
