@@ -7,7 +7,10 @@
 * Adds a custom header gameobject.
 * Adds a toggle enable button and missing script icon to game objects in hierachy.
 
-To Create a header object you must create a game object with a name that starts with "---" followed by the name (---Environment.
+To Create a header object you must create a game object with a name that starts with "---" followed by the name 
+
+(EG --- Environment.)
+
 Alernatively you can use the create menu to add a new header template object.
 
 Settings can be found in Edit/Preferences/Custom Hierarchy.
