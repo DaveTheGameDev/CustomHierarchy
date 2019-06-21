@@ -5,19 +5,24 @@ namespace CustomHierarchy
 {
     
 [InitializeOnLoad]
-public static class HierarchyWindowGroupHeader
+public static class CustomHierarchyEditor
 {
     private static Texture2D eye;
     private static Texture2D eyeClosed;
     private static Texture2D warningComponent;
 
-    static HierarchyWindowGroupHeader()
+    public static GUIStyle HeaderStyle;
+    
+    
+    static CustomHierarchyEditor()
     {
+       
         eye = Resources.Load("eye") as Texture2D;
         eyeClosed = Resources.Load("eyeclosed") as Texture2D;
         warningComponent = Resources.Load("warning") as Texture2D;
 
         CustomHierarchySettings.Load();
+       
         
         EditorApplication.RepaintHierarchyWindow();
         
@@ -34,11 +39,11 @@ public static class HierarchyWindowGroupHeader
             var rect = selectionRect;
             rect.width = Screen.width;
             rect.xMin = 15;
-            EditorGUI.DrawRect(rect, Color.gray);
+            EditorGUI.DrawRect(rect, CustomHierarchySettings.settings.headerColor);
 
             selectionRect.yMax -=2;
                 
-            EditorGUI.DropShadowLabel(selectionRect, gameObject.name.Replace("-", "").ToUpperInvariant());
+            EditorGUI.LabelField(selectionRect, gameObject.name.Substring(3).ToUpperInvariant(), HeaderStyle);
         }
         
         // Toggle Active Button

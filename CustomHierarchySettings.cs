@@ -12,6 +12,19 @@ namespace CustomHierarchy
         {
             public bool showMissingScriptIcon;
             public bool showEnabledIcon;
+            public Color headerColor;
+            public Color fontColor;
+            public int fontSize;
+            public TextAnchor textAnchor;
+            public FontStyle fontStyle;
+            public GUIStyleState styleState;
+        }
+        
+        public enum Position
+        {
+            Left,
+            Center,
+            Right
         }
 
         private static string MyCustomSettingsPath = null;
@@ -29,7 +42,12 @@ namespace CustomHierarchy
             {
                 settings.showMissingScriptIcon = true;
                 settings.showEnabledIcon = true;
-
+                settings.textAnchor = TextAnchor.MiddleCenter;
+                settings.headerColor = Color.grey;
+                settings.fontColor = Color.black;
+                settings.styleState.textColor = settings.fontColor;
+                
+                settings.fontSize = 14;
                 Save();
             }
         }
@@ -65,9 +83,24 @@ namespace CustomHierarchy
                         
                         settings.showMissingScriptIcon = EditorGUILayout.Toggle("Show Missing Script Icon", settings.showMissingScriptIcon);
                         settings.showEnabledIcon = EditorGUILayout.Toggle("Show Enable Icon", settings.showEnabledIcon);
-
+                        settings.headerColor = EditorGUILayout.ColorField("Header Color", settings.headerColor);
+                        settings.fontColor = EditorGUILayout.ColorField("Font Color", settings.fontColor);
+                        settings.fontSize = EditorGUILayout.IntField("Header Font Size", settings.fontSize);
+                        settings.fontStyle = (FontStyle)EditorGUILayout.EnumPopup("Font Style", settings.fontStyle);
+                        settings.textAnchor = (TextAnchor)EditorGUILayout.EnumPopup("Header Text Position", settings.textAnchor);
+                        
                         if (EditorGUI.EndChangeCheck())
                         {
+                            settings.styleState.textColor = settings.fontColor;
+                
+                            CustomHierarchyEditor.HeaderStyle = new GUIStyle
+                            {
+                                fontSize = settings.fontSize,
+                                alignment = settings.textAnchor,
+                                fontStyle = settings.fontStyle,
+                                normal = settings.styleState
+                            };
+                            
                             EditorApplication.RepaintHierarchyWindow();
                             
                            Save();
@@ -88,6 +121,16 @@ namespace CustomHierarchy
             {
                 var data = File.ReadAllText(MyCustomSettingsPath);
                 settings = JsonUtility.FromJson<Settings>(data);
+
+                settings.styleState.textColor = settings.fontColor;
+                
+                CustomHierarchyEditor.HeaderStyle = new GUIStyle
+                {
+                    fontSize = settings.fontSize,
+                    alignment = settings.textAnchor,
+                    fontStyle = settings.fontStyle,
+                    normal = settings.styleState
+                };
 
                 return true;
             }
