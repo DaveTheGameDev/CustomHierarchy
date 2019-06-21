@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEditor;
 
 namespace CustomHierarchy
@@ -16,14 +17,12 @@ public static class CustomHierarchyEditor
     
     static CustomHierarchyEditor()
     {
-       
         eye = Resources.Load("eye") as Texture2D;
-        eyeClosed = Resources.Load("eyeclosed") as Texture2D;
+        eyeClosed = Resources.Load("eyeClosed") as Texture2D;
         warningComponent = Resources.Load("warning") as Texture2D;
 
         CustomHierarchySettings.Load();
-       
-        
+
         EditorApplication.RepaintHierarchyWindow();
         
         EditorApplication.hierarchyWindowItemOnGUI += HierarchyWindowItemOnGui;
@@ -34,27 +33,22 @@ public static class CustomHierarchyEditor
         var gameObject = EditorUtility.InstanceIDToObject(instanceId) as GameObject;
 
         // Rect and Label
-        if (gameObject != null && gameObject.name.StartsWith("---", System.StringComparison.Ordinal))
-        {
-            var rect = selectionRect;
-            rect.width = Screen.width;
-            rect.xMin = 15;
-            EditorGUI.DrawRect(rect, CustomHierarchySettings.settings.headerColor);
-
-            selectionRect.yMax -=2;
-                
-            EditorGUI.LabelField(selectionRect, gameObject.name.Substring(3).ToUpperInvariant(), HeaderStyle);
-        }
+        DrawHeader(ref selectionRect, gameObject);
         
         // Toggle Active Button
-        if (gameObject != null && !gameObject.name.StartsWith("---", System.StringComparison.Ordinal))
+        DrawIcons(ref selectionRect, gameObject);
+    }
+
+    private static void DrawIcons(ref Rect selectionRect, GameObject gameObject)
+    {
+        if (gameObject != null && !gameObject.name.StartsWith("---", StringComparison.Ordinal))
         {
             selectionRect.x = Screen.width - 30;
             selectionRect.yMin += 3f;
             selectionRect.yMax += 4;
             selectionRect.width = 12;
             selectionRect.height = 12;
-            
+
             if (CustomHierarchySettings.settings.showEnabledIcon)
             {
                 Texture2D currentEye = gameObject.activeSelf ? eye : eyeClosed;
@@ -75,9 +69,8 @@ public static class CustomHierarchyEditor
                 {
                     selectionRect.x = Screen.width - 45;
                 }
-                
-                
-            
+
+
                 foreach (var script in gameObject.GetComponentsInChildren<MonoBehaviour>())
                 {
                     if (script == null)
@@ -88,6 +81,24 @@ public static class CustomHierarchyEditor
             }
         }
     }
+
+    private static void DrawHeader(ref Rect selectionRect, GameObject gameObject)
+    {
+        if (gameObject != null && gameObject.name.StartsWith("---", StringComparison.Ordinal))
+        {
+            var rect = selectionRect;
+            rect.width = Screen.width;
+            rect.xMin = CustomHierarchySettings.settings.headerXStartOffset;
+            rect.xMax = Screen.width - CustomHierarchySettings.settings.headerXEndOffset;
+
+            EditorGUI.DrawRect(rect, CustomHierarchySettings.settings.headerColor);
+
+            selectionRect.yMax -= 2;
+
+            EditorGUI.LabelField(selectionRect, gameObject.name.Substring(3).ToUpperInvariant(), HeaderStyle);
+        }
+    }
+
 
     [MenuItem("GameObject/Create Header Object", false, 0)]
     static void CreateHeader()

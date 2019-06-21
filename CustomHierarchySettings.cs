@@ -18,13 +18,9 @@ namespace CustomHierarchy
             public TextAnchor textAnchor;
             public FontStyle fontStyle;
             public GUIStyleState styleState;
-        }
-        
-        public enum Position
-        {
-            Left,
-            Center,
-            Right
+            
+            public float headerXStartOffset;
+            public float headerXEndOffset;
         }
 
         private static string MyCustomSettingsPath = null;
@@ -42,12 +38,16 @@ namespace CustomHierarchy
             {
                 settings.showMissingScriptIcon = true;
                 settings.showEnabledIcon = true;
-                settings.textAnchor = TextAnchor.MiddleCenter;
+               
                 settings.headerColor = Color.grey;
-                settings.fontColor = Color.black;
-                settings.styleState.textColor = settings.fontColor;
+                settings.headerXEndOffset = 0;
+                settings.headerXStartOffset = 16;
+                settings.textAnchor = TextAnchor.MiddleCenter;
                 
                 settings.fontSize = 14;
+                settings.fontColor = Color.black;
+                settings.styleState.textColor = settings.fontColor;
+
                 Save();
             }
         }
@@ -83,7 +83,11 @@ namespace CustomHierarchy
                         
                         settings.showMissingScriptIcon = EditorGUILayout.Toggle("Show Missing Script Icon", settings.showMissingScriptIcon);
                         settings.showEnabledIcon = EditorGUILayout.Toggle("Show Enable Icon", settings.showEnabledIcon);
+                       
                         settings.headerColor = EditorGUILayout.ColorField("Header Color", settings.headerColor);
+                        settings.headerXStartOffset = EditorGUILayout.FloatField("header X Start Offset", settings.headerXStartOffset);
+                        settings.headerXEndOffset = EditorGUILayout.FloatField("Header X End Offset", settings.headerXEndOffset);
+                        
                         settings.fontColor = EditorGUILayout.ColorField("Font Color", settings.fontColor);
                         settings.fontSize = EditorGUILayout.IntField("Header Font Size", settings.fontSize);
                         settings.fontStyle = (FontStyle)EditorGUILayout.EnumPopup("Font Style", settings.fontStyle);
