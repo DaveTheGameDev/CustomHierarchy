@@ -15,5 +15,5 @@ Settings can be found in Edit/Preferences/Custom Hierarchy.
 
 
 Credits:
-Header and Hierarchy mod from  [ogiacomelli](https://twitter.com/ogiacomelli/status/1140945085120614400) 
-Icons from [Icons 8](https://icons8.com)
+* Header and Hierarchy mod from  [ogiacomelli](https://twitter.com/ogiacomelli/status/1140945085120614400) 
+* Icons from [Icons 8](https://icons8.com)
