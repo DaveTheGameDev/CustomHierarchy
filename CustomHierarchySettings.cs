@@ -46,7 +46,8 @@ namespace CustomHierarchy
                 
                 settings.fontSize = 14;
                 settings.fontColor = Color.black;
-                settings.styleState.textColor = settings.fontColor;
+
+                settings.styleState = new GUIStyleState {textColor = settings.fontColor};
 
                 Save();
             }
