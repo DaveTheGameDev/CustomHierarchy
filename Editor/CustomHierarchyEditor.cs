@@ -41,6 +41,9 @@ public static class CustomHierarchyEditor
 
     private static void DrawIcons(ref Rect selectionRect, GameObject gameObject)
     {
+        if (Event.current.type != EventType.Repaint)
+            return;
+        
         if (gameObject != null && !gameObject.name.StartsWith("---", StringComparison.Ordinal))
         {
             selectionRect.x = Screen.width - 30;
@@ -84,6 +87,9 @@ public static class CustomHierarchyEditor
 
     private static void DrawHeader(ref Rect selectionRect, GameObject gameObject)
     {
+        if (Event.current.type != EventType.Repaint)
+            return;
+        
         if (gameObject != null && gameObject.name.StartsWith("---", StringComparison.Ordinal))
         {
             var rect = selectionRect;
@@ -92,11 +98,29 @@ public static class CustomHierarchyEditor
             rect.xMax = Screen.width - CustomHierarchySettings.settings.headerXEndOffset;
 
             EditorGUI.DrawRect(rect, CustomHierarchySettings.settings.headerColor);
-
+            
+            if(CustomHierarchySettings.settings.showOutline)
+                DrawOutline(rect, CustomHierarchySettings.settings.outlineSize, CustomHierarchySettings.settings.outlineColor);
+            
             selectionRect.yMax -= 2;
 
             EditorGUI.LabelField(selectionRect, gameObject.name.Substring(3).ToUpperInvariant(), HeaderStyle);
         }
+    }
+    
+    private static void DrawOutline(Rect rect, float size, Color color)
+    {
+        if (Event.current.type != EventType.Repaint)
+            return;
+        Color color1 = GUI.color;
+        GUI.color *= color;
+        GUI.DrawTexture(new Rect(rect.x, rect.y, rect.width, size), EditorGUIUtility.whiteTexture);
+        GUI.DrawTexture(new Rect(rect.x, rect.yMax - size, rect.width, size), EditorGUIUtility.whiteTexture);
+        
+        GUI.DrawTexture(new Rect(rect.x, rect.y + 1f, size, rect.height - size),EditorGUIUtility.whiteTexture);
+        GUI.DrawTexture(new Rect(rect.xMax - size, rect.y + 1f, size, rect.height - size), EditorGUIUtility.whiteTexture);
+        
+        GUI.color = color1;
     }
 
 

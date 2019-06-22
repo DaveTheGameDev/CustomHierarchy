@@ -12,15 +12,22 @@ namespace CustomHierarchy
         {
             public bool showMissingScriptIcon;
             public bool showEnabledIcon;
+            public bool showOutline;
+           
+            public Color outlineColor;
             public Color headerColor;
             public Color fontColor;
+            
+            public int outlineSize;
             public int fontSize;
+            
             public TextAnchor textAnchor;
             public FontStyle fontStyle;
             public GUIStyleState styleState;
             
             public float headerXStartOffset;
             public float headerXEndOffset;
+           
         }
 
         private static string MyCustomSettingsPath = null;
@@ -38,7 +45,10 @@ namespace CustomHierarchy
             {
                 settings.showMissingScriptIcon = true;
                 settings.showEnabledIcon = true;
-               
+                settings.showOutline = true;
+                settings.outlineSize = 1;
+                settings.outlineColor = Color.black;
+                
                 settings.headerColor = Color.grey;
                 settings.headerXEndOffset = 0;
                 settings.headerXStartOffset = 16;
@@ -85,19 +95,24 @@ namespace CustomHierarchy
                         settings.showMissingScriptIcon = EditorGUILayout.Toggle("Show Missing Script Icon", settings.showMissingScriptIcon);
                         settings.showEnabledIcon = EditorGUILayout.Toggle("Show Enable Icon", settings.showEnabledIcon);
                        
+                        settings.showOutline = EditorGUILayout.Toggle("Show Outline", settings.showOutline);
+                        settings.outlineColor = EditorGUILayout.ColorField("Header Color", settings.outlineColor);
+                        settings.outlineSize = EditorGUILayout.IntSlider("Outline Size", settings.outlineSize, 1, 5);
+                        
                         settings.headerColor = EditorGUILayout.ColorField("Header Color", settings.headerColor);
                         settings.headerXStartOffset = EditorGUILayout.FloatField("header X Start Offset", settings.headerXStartOffset);
                         settings.headerXEndOffset = EditorGUILayout.FloatField("Header X End Offset", settings.headerXEndOffset);
                         
                         settings.fontColor = EditorGUILayout.ColorField("Font Color", settings.fontColor);
-                        settings.fontSize = EditorGUILayout.IntField("Header Font Size", settings.fontSize);
+                        settings.fontSize = EditorGUILayout.IntSlider("Header Font Size", settings.fontSize, 1, 20);
+         
                         settings.fontStyle = (FontStyle)EditorGUILayout.EnumPopup("Font Style", settings.fontStyle);
                         settings.textAnchor = (TextAnchor)EditorGUILayout.EnumPopup("Header Text Position", settings.textAnchor);
                         
                         if (EditorGUI.EndChangeCheck())
                         {
                             settings.styleState.textColor = settings.fontColor;
-                
+
                             CustomHierarchyEditor.HeaderStyle = new GUIStyle
                             {
                                 fontSize = settings.fontSize,
