@@ -1,7 +1,5 @@
 # Custom-Hierarchy
 
-[![PayPal](https://drive.google.com/uc?id=1OQrtNBVJehNVxgPf6T6yX1wIysz1ElLR)](https://www.paypal.me/DavidConwayDev)
-
 * To use download/clone into editor folder.
 
 ![Show Case](/images/showcase.png)
