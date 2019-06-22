@@ -50,7 +50,7 @@ namespace CustomHierarchy
                 settings.outlineColor = Color.black;
                 
                 settings.headerColor = Color.grey;
-                settings.headerXEndOffset = 0;
+                settings.headerXEndOffset = 4;
                 settings.headerXStartOffset = 16;
                 settings.textAnchor = TextAnchor.MiddleCenter;
                 
@@ -96,14 +96,14 @@ namespace CustomHierarchy
                         settings.showEnabledIcon = EditorGUILayout.Toggle("Show Enable Icon", settings.showEnabledIcon);
                        
                         settings.showOutline = EditorGUILayout.Toggle("Show Outline", settings.showOutline);
-                        settings.outlineColor = EditorGUILayout.ColorField("Header Color", settings.outlineColor);
+                        settings.outlineColor = EditorGUILayout.ColorField(new GUIContent("Outline Color"), settings.outlineColor, true, false, false);
                         settings.outlineSize = EditorGUILayout.IntSlider("Outline Size", settings.outlineSize, 1, 5);
                         
-                        settings.headerColor = EditorGUILayout.ColorField("Header Color", settings.headerColor);
+                        settings.headerColor = EditorGUILayout.ColorField(new GUIContent("Header Color"), settings.headerColor, true, false, false);
                         settings.headerXStartOffset = EditorGUILayout.FloatField("header X Start Offset", settings.headerXStartOffset);
                         settings.headerXEndOffset = EditorGUILayout.FloatField("Header X End Offset", settings.headerXEndOffset);
                         
-                        settings.fontColor = EditorGUILayout.ColorField("Font Color", settings.fontColor);
+                        settings.fontColor = EditorGUILayout.ColorField(new GUIContent("Font Color"), settings.fontColor, true, false, false);
                         settings.fontSize = EditorGUILayout.IntSlider("Header Font Size", settings.fontSize, 1, 20);
          
                         settings.fontStyle = (FontStyle)EditorGUILayout.EnumPopup("Font Style", settings.fontStyle);
