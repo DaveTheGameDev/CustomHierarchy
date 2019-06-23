@@ -59,6 +59,14 @@ namespace CustomHierarchy
 
                 settings.styleState = new GUIStyleState {textColor = settings.fontColor};
 
+                CustomHierarchyEditor.HeaderStyle = new GUIStyle
+                {
+                    fontSize = settings.fontSize,
+                    alignment = settings.textAnchor,
+                    fontStyle = settings.fontStyle,
+                    normal = settings.styleState
+                };
+                
                 Save();
             }
         }
