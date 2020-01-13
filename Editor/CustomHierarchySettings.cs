@@ -17,6 +17,8 @@ namespace CustomHierarchy
             
             public bool showMissingScriptIcon;
             public bool showEnabledIcon;
+            public bool showGameObjectIcon;
+            public bool showDefaultGameObjectIcons;
             public bool showOutline;
            
             public Color outlineColor;
@@ -51,6 +53,8 @@ namespace CustomHierarchy
             {
                 settings.showMissingScriptIcon = true;
                 settings.showEnabledIcon = true;
+                settings.showGameObjectIcon = true;
+                settings.showDefaultGameObjectIcons = true;
                 settings.showTag = true;
                 settings.showLayer = true;
                 settings.showDefaultLayer = true;
@@ -72,29 +76,7 @@ namespace CustomHierarchy
                 
                 settings.styleState = new GUIStyleState {textColor = settings.fontColor};
 
-                CustomHierarchyEditor.HeaderStyle = new GUIStyle
-                {
-                    fontSize = settings.fontSize,
-                    alignment = settings.textAnchor,
-                    fontStyle = settings.fontStyle,
-                    normal = settings.styleState
-                };
-                
-                CustomHierarchyEditor.TagStyle = new GUIStyle
-                {
-                    fontSize = settings.tagFontSize,
-                    alignment = TextAnchor.UpperRight,
-                    fontStyle = settings.fontStyle,
-                    //normal = settings.styleState
-                };
-                
-                CustomHierarchyEditor.LayerStyle = new GUIStyle
-                {
-                    fontSize = settings.tagFontSize,
-                    alignment = TextAnchor.LowerRight,
-                    fontStyle = settings.fontStyle,
-                    //normal = settings.styleState
-                };
+                ApplyTextStyles();
                 
                 Save();
             }
@@ -131,6 +113,8 @@ namespace CustomHierarchy
                         
                         settings.showMissingScriptIcon = EditorGUILayout.Toggle("Show Missing Script Icon", settings.showMissingScriptIcon);
                         settings.showEnabledIcon = EditorGUILayout.Toggle("Show Enable Icon", settings.showEnabledIcon);
+                        settings.showGameObjectIcon = EditorGUILayout.Toggle("Show GameObject Icon", settings.showGameObjectIcon);
+                        settings.showDefaultGameObjectIcons = EditorGUILayout.Toggle("Show Default GameObject Icon", settings.showDefaultGameObjectIcons);
                         settings.showLayer = EditorGUILayout.Toggle("Show Layer", settings.showLayer);
                         settings.showTag = EditorGUILayout.Toggle("Show Tag", settings.showTag);
                         settings.showDefaultLayer = EditorGUILayout.Toggle("Show Default Layer", settings.showDefaultLayer);
@@ -156,30 +140,8 @@ namespace CustomHierarchy
                         {
                             settings.styleState.textColor = settings.fontColor;
 
-                            CustomHierarchyEditor.HeaderStyle = new GUIStyle
-                            {
-                                fontSize = settings.fontSize,
-                                alignment = settings.textAnchor,
-                                fontStyle = settings.fontStyle,
-                                normal = settings.styleState
-                            };
-                            
-                            CustomHierarchyEditor.TagStyle = new GUIStyle
-                            {
-                                fontSize = settings.tagFontSize,
-                                alignment = TextAnchor.MiddleRight,
-                                fontStyle = settings.fontStyle,
-                                //normal = settings.styleState
-                            };
-                            
-                            CustomHierarchyEditor.LayerStyle = new GUIStyle
-                            {
-                                fontSize = settings.tagFontSize,
-                                alignment = TextAnchor.LowerRight,
-                                fontStyle = settings.fontStyle,
-                                //normal = settings.styleState
-                            };
-                            
+                            ApplyTextStyles();
+
                             EditorApplication.RepaintHierarchyWindow();
                             
                            Save();
@@ -192,6 +154,8 @@ namespace CustomHierarchy
 
                 return provider;
             }
+
+           
         }
 
         public static bool Load()
@@ -203,29 +167,7 @@ namespace CustomHierarchy
 
                 settings.styleState.textColor = settings.fontColor;
                 
-                CustomHierarchyEditor.HeaderStyle = new GUIStyle
-                {
-                    fontSize = settings.fontSize,
-                    alignment = settings.textAnchor,
-                    fontStyle = settings.fontStyle,
-                    normal = settings.styleState
-                };
-                
-                CustomHierarchyEditor.TagStyle = new GUIStyle
-                {
-                    fontSize = settings.tagFontSize,
-                    alignment = TextAnchor.MiddleRight,
-                    fontStyle = settings.fontStyle,
-                    //normal = settings.styleState
-                };
-                
-                CustomHierarchyEditor.LayerStyle = new GUIStyle
-                {
-                    fontSize = settings.tagFontSize,
-                    alignment = TextAnchor.LowerRight,
-                    fontStyle = settings.fontStyle,
-                    //normal = settings.styleState
-                };
+                ApplyTextStyles();
 
                 return true;
             }
@@ -242,5 +184,31 @@ namespace CustomHierarchy
             }
         }
         
+        private static void ApplyTextStyles()
+        {
+            CustomHierarchyEditor.HeaderStyle = new GUIStyle
+            {
+                fontSize = settings.fontSize,
+                alignment = settings.textAnchor,
+                fontStyle = settings.fontStyle,
+                normal = settings.styleState
+            };
+
+            CustomHierarchyEditor.TagStyle = new GUIStyle
+            {
+                fontSize = settings.tagFontSize,
+                alignment = TextAnchor.MiddleRight,
+                fontStyle = settings.fontStyle,
+                //normal = settings.styleState
+            };
+
+            CustomHierarchyEditor.LayerStyle = new GUIStyle
+            {
+                fontSize = settings.tagFontSize,
+                alignment = TextAnchor.LowerRight,
+                fontStyle = settings.fontStyle,
+                //normal = settings.styleState
+            };
+        }
     }
 }

@@ -54,6 +54,7 @@ namespace CustomHierarchy
             {
                 if (EditorUtility.DisplayDialog("Remove Missing Scripts", "Are You Sure", "Yes", "No"))
                 {
+                    EditorApplication.delayCall += () => 
                     GameObjectUtility.RemoveMonoBehavioursWithMissingScript(gameObject);
                 }
             }

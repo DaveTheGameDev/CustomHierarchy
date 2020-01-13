@@ -22,6 +22,7 @@ namespace CustomHierarchy
                 new WarningIcon(),
                 new EnabledIcon(), 
                 new LayerTagDrawer(),
+                new GameObjectIconDrawer(),
             };
 
             CustomHierarchySettings.Load();
