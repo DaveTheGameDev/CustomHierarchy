@@ -1,11 +1,15 @@
 # Custom-Hierarchy
 
-* To use download/clone into editor folder.
+* To install just clone into Packages folder, Assets folder or if using 19.3 use the package manager add from git repo functionality.
 
 ![Show Case](/images/showcase.png)
 
-* Adds a custom header gameobject.
-* Adds a toggle enable button and missing script icon to game objects in hierachy.
+## Features
+* Header GameObject.
+* View and change GameObjects icon.
+* Enable/Disable object button.
+* View tag/label.
+
 
 To Create a header object you must create a game object with a name that starts with "---" followed by the name 
 
@@ -18,5 +22,5 @@ Settings can be found in Edit/Preferences/Custom Hierarchy.
 
 
 Credits:
-* Header and Hierarchy mod from  [ogiacomelli](https://twitter.com/ogiacomelli/status/1140945085120614400) 
+* Inspiration  [ogiacomelli](https://twitter.com/ogiacomelli/status/1140945085120614400) 
 * Icons from [Icons 8](https://icons8.com)
