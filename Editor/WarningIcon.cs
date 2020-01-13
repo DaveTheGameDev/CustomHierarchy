@@ -26,7 +26,7 @@ namespace CustomHierarchy
             //     rect.x = Screen.width - 45;
             // }
 
-            rect.x = Screen.width - 45;
+            rect.x = Screen.width - 60;
             
             foreach (var script in CustomHierarchyEditor.CurrentGameObject.GetComponentsInChildren<MonoBehaviour>())
             {
@@ -40,20 +40,16 @@ namespace CustomHierarchy
         private static void DrawActiveButton(Rect rect, GameObject gameObject, GUIContent texture)
         {
 #if UNITY_2019_3
-            Color c = GUI.color;
-            GUI.color = new Color(c.r, c.g, c.b, texture.image == warningComponent ? .6f : .25f);
-
+           
             EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
             
             GUI.changed = false;
 
             GUI.Button(rect, texture, GUIStyle.none);
-            
-            GUI.color = c;
-
+  
             if (GUI.changed)
             {
-                if (EditorUtility.DisplayDialog("Remove Missing Scripts", "Are You Sure", "Yes", "No"))
+                if (EditorUtility.DisplayDialog("Remove Missing Scripts", "Are You Sure?", "Yes", "No"))
                 {
                     EditorApplication.delayCall += () => 
                         GameObjectUtility.RemoveMonoBehavioursWithMissingScript(gameObject);

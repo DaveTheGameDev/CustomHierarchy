@@ -13,6 +13,7 @@ namespace CustomHierarchy
             public bool enabled;
             public bool showLayer;
             public bool showTag;
+            public bool showStaticFlags;
             public bool showDefaultTag;
             public bool showDefaultLayer;
             
@@ -55,6 +56,7 @@ namespace CustomHierarchy
                 settings.enabled = true;
                 settings.showMissingScriptIcon = true;
                 settings.showEnabledIcon = true;
+                settings.showStaticFlags = true;
                 settings.showGameObjectIcon = true;
                 settings.showDefaultGameObjectIcons = true;
                 settings.showTag = true;
@@ -115,6 +117,7 @@ namespace CustomHierarchy
                         
                         settings.enabled = EditorGUILayout.Toggle("Enabled", settings.enabled);
                         settings.showMissingScriptIcon = EditorGUILayout.Toggle("Show Missing Script Icon", settings.showMissingScriptIcon);
+                        settings.showStaticFlags = EditorGUILayout.Toggle("Show Static Flags Icon", settings.showStaticFlags);
                         settings.showEnabledIcon = EditorGUILayout.Toggle("Show Enable Icon", settings.showEnabledIcon);
                         settings.showGameObjectIcon = EditorGUILayout.Toggle("Show GameObject Icon", settings.showGameObjectIcon);
                         settings.showDefaultGameObjectIcons = EditorGUILayout.Toggle("Show Default GameObject Icon", settings.showDefaultGameObjectIcons);
