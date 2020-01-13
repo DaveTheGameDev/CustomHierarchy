@@ -8,7 +8,6 @@ namespace CustomHierarchy
     public static class CustomHierarchyEditor
     {
         public static GameObject CurrentGameObject { get; private set; }
-      
 
         public static GUIStyle HeaderStyle;
         public static GUIStyle TagStyle;
@@ -32,9 +31,11 @@ namespace CustomHierarchy
             EditorApplication.hierarchyWindowItemOnGUI += HierarchyWindowItemOnGui;
         }
 
-        static void HierarchyWindowItemOnGui(int instanceId, Rect selectionRect)
+        private static void HierarchyWindowItemOnGui(int instanceId, Rect selectionRect)
         {
-            GUI.depth = int.MaxValue;
+            if(!CustomHierarchySettings.settings.enabled)
+                return;
+            
             var gameObject = EditorUtility.InstanceIDToObject(instanceId) as GameObject;
             CurrentGameObject = gameObject;
             

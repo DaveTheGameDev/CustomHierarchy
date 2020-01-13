@@ -10,6 +10,7 @@ namespace CustomHierarchy
         [Serializable]
         public struct Settings
         {
+            public bool enabled;
             public bool showLayer;
             public bool showTag;
             public bool showDefaultTag;
@@ -51,6 +52,7 @@ namespace CustomHierarchy
             
             if (!Load())
             {
+                settings.enabled = true;
                 settings.showMissingScriptIcon = true;
                 settings.showEnabledIcon = true;
                 settings.showGameObjectIcon = true;
@@ -111,6 +113,7 @@ namespace CustomHierarchy
                     {
                         EditorGUI.BeginChangeCheck();
                         
+                        settings.enabled = EditorGUILayout.Toggle("Enabled", settings.enabled);
                         settings.showMissingScriptIcon = EditorGUILayout.Toggle("Show Missing Script Icon", settings.showMissingScriptIcon);
                         settings.showEnabledIcon = EditorGUILayout.Toggle("Show Enable Icon", settings.showEnabledIcon);
                         settings.showGameObjectIcon = EditorGUILayout.Toggle("Show GameObject Icon", settings.showGameObjectIcon);
