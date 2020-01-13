@@ -39,6 +39,7 @@ namespace CustomHierarchy
         
         private static void DrawActiveButton(Rect rect, GameObject gameObject, GUIContent texture)
         {
+#if UNITY_2019_3
             Color c = GUI.color;
             GUI.color = new Color(c.r, c.g, c.b, texture.image == warningComponent ? .6f : .25f);
 
@@ -55,9 +56,12 @@ namespace CustomHierarchy
                 if (EditorUtility.DisplayDialog("Remove Missing Scripts", "Are You Sure", "Yes", "No"))
                 {
                     EditorApplication.delayCall += () => 
-                    GameObjectUtility.RemoveMonoBehavioursWithMissingScript(gameObject);
+                        GameObjectUtility.RemoveMonoBehavioursWithMissingScript(gameObject);
                 }
             }
+#else
+ GUI.DrawTexture(rect, texture.image);
+#endif
         }
     }
 }

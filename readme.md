@@ -7,6 +7,7 @@
 ## Features
 * Header GameObject.
 * View and change GameObjects icon.
+* Missing script icon. (When pressed missing scripts get removed from that GameObject (2019.3+)).
 * Enable/Disable object button.
 * View tag/label.
 
