@@ -24,4 +24,4 @@ Settings can be found in Edit/Preferences/Custom Hierarchy.
 
 Credits:
 * Inspiration  [ogiacomelli](https://twitter.com/ogiacomelli/status/1140945085120614400) 
-* Icons from [Icons 8](https://icons8.com)
+* Eye and Warning Icons from [Icons 8](https://icons8.com)
