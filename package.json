@@ -1,7 +1,7 @@
 {
     "name": "com.davesgames.customhierarchy",
     "displayName": "Custom Hierarchy",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "unity": "2019.1",
     "description": "Adds new functionality to the hierarchy"
 }
