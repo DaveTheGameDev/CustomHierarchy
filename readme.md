@@ -1,6 +1,7 @@
 # Custom-Hierarchy
 
 * To install just clone into Packages folder, Assets folder or if using 19.3 use the package manager add from git repo functionality.
+Or Add this directly to your package manifest "com.davesgames.customhierarchy": "https://github.com/DaveTheGameDev/CustomHierarchy.git#upm",
 
 ![Show Case](/images/showcase.png)
 
