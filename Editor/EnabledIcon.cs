@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace CustomHierarchy
 {
-    public class EnabledIcon : IconBase
+    public class EnabledIcon : CustomHierarchyDrawer
     {
+        protected override string ValidObjectNamePrefix => "---";
+        
         private static Texture2D eye;
         private static Texture2D eyeClosed;
 
@@ -16,6 +18,12 @@ namespace CustomHierarchy
 
         public override void DrawGUI(Rect rect)
         {
+            if(!IsValid())
+                return;
+            
+            rect.width = 14;
+            rect.height = 14;
+            rect.x = Screen.width - 35;
             if (CustomHierarchySettings.settings.showEnabledIcon)
             {
                 Texture2D currentEye = CustomHierarchyEditor.CurrentGameObject.activeSelf ? eye : eyeClosed;
@@ -40,6 +48,11 @@ namespace CustomHierarchy
             {
                 gameObject.SetActive(!gameObject.activeSelf);
             }
+        }
+        
+        protected override bool IsValid()
+        {
+            return !base.IsValid();
         }
     }
 }

@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections;
+using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 
 namespace CustomHierarchy
 {
-    public class StaticIcon : IconBase
+    public class StaticIcon : CustomHierarchyDrawer
     {
+        protected override string ValidObjectNamePrefix => "---";
+        
         private static Texture2D staticIcon;
+        private static GameObject  lastObject;
 
         public StaticIcon()
         {
@@ -16,10 +20,16 @@ namespace CustomHierarchy
 
         public override void DrawGUI(Rect rect)
         {
+            if(!IsValid())
+                return;
+            
             if(!CustomHierarchySettings.settings.showStaticFlags)
                 return;
             
-            rect.x = Screen.width - 45;
+            rect.width = 12;
+            rect.height = 12;
+            rect.y += 2;
+            rect.x = Screen.width - 47;
             
             DrawActiveButton(rect, CustomHierarchyEditor.CurrentGameObject, new GUIContent(staticIcon));
         }
@@ -35,6 +45,7 @@ namespace CustomHierarchy
             
             if (GUI.changed)
             {
+                lastObject = CustomHierarchyEditor.CurrentGameObject;
                 GenericMenu menu = new GenericMenu();
 
                 ArrayList flagNames = new ArrayList();
@@ -96,7 +107,7 @@ namespace CustomHierarchy
         
         private static void OnTagSelected(object userdata)
         {
-           StaticEditorFlags flags = GameObjectUtility.GetStaticEditorFlags(CustomHierarchyEditor.CurrentGameObject);
+           StaticEditorFlags flags = GameObjectUtility.GetStaticEditorFlags(lastObject);
 
            if ((string) userdata == "Everything")
            {
@@ -125,7 +136,13 @@ namespace CustomHierarchy
                }
            }
            
-           GameObjectUtility.SetStaticEditorFlags(CustomHierarchyEditor.CurrentGameObject, flags);
+           GameObjectUtility.SetStaticEditorFlags(lastObject, flags);
+           lastObject = null;
+        }
+
+        protected override bool IsValid()
+        {
+            return !base.IsValid();
         }
     }
 }

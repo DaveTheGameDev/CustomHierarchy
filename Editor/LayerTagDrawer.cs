@@ -4,10 +4,16 @@ using UnityEngine;
 
 namespace CustomHierarchy
 {
-    public class LayerTagDrawer : IconBase
+    public class LayerTagDrawer : CustomHierarchyDrawer
     {
+        protected override string ValidObjectNamePrefix => "---";
+        
+        private static GameObject lastObject;
         public override void DrawGUI(Rect rect)
         {
+            if(!IsValid())
+                return;
+            
             rect.x = Screen.width - 115;
             rect.width = 50;
                 
@@ -20,32 +26,40 @@ namespace CustomHierarchy
             if (!CustomHierarchySettings.settings.showLayer) 
                 return;
             
-            if (!CustomHierarchySettings.settings.showTag)
-            {
-                rect.y -= 5;
-            }
 
-            rect.y += 2;
             string layer = LayerMask.LayerToName(CustomHierarchyEditor.CurrentGameObject.layer);
 
-            if (layer == "Default" && !CustomHierarchySettings.settings.showDefaultLayer)
-                return;
-
-            GUI.changed = false;
+            Color c = GUI.color;
+            if (layer == "Default")
+            {
+                if(!CustomHierarchySettings.settings.showDefaultLayer)
+                    return;
+                
+                GUI.color = new Color(c.r,c.g,c.b, c.a * 0.5f);
+            }
 
             DrawLayerWithMenu(rect, layer);
+            GUI.color = c;
         }
 
         private static void DrawTag(Rect rect)
         {
             if (CustomHierarchySettings.settings.showTag)
             {
-                rect.y -= 5;
+                rect.y -= 7;
 
-                if (CustomHierarchyEditor.CurrentGameObject.CompareTag("Untagged") && !CustomHierarchySettings.settings.showDefaultTag)
-                    return;
+                Color c = GUI.color;
+                
+                if (CustomHierarchyEditor.CurrentGameObject.CompareTag("Untagged"))
+                {
+                    if(!CustomHierarchySettings.settings.showDefaultTag)
+                        return;
+                    
+                    GUI.color = new Color(c.r,c.g,c.b, c.a * 0.5f);
+                }
                 
                 DrawTagWithMenu(rect, CustomHierarchyEditor.CurrentGameObject.tag);
+                GUI.color = c;
             }
         }
 
@@ -55,16 +69,10 @@ namespace CustomHierarchy
 
             EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
             GUI.Button(rect, text, CustomHierarchyEditor.LayerStyle);
-
-            Event e = Event.current;
             
-            if (!e.isMouse && e.button != 1)
-            {
-                return;
-            }
-
             if (GUI.changed)
             {
+                lastObject = CustomHierarchyEditor.CurrentGameObject;
                 GenericMenu menu = new GenericMenu();
 
                 foreach (string tag in UnityEditorInternal.InternalEditorUtility.tags)
@@ -83,15 +91,9 @@ namespace CustomHierarchy
             EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
             GUI.Button(rect, text, CustomHierarchyEditor.LayerStyle);
 
-            Event e = Event.current;
-            
-            if (!e.isMouse && e.button != 1)
-            {
-                return;
-            }
-
             if (GUI.changed)
             {
+                lastObject = CustomHierarchyEditor.CurrentGameObject;
                 GenericMenu menu = new GenericMenu();
 
                 ArrayList layerNames = new ArrayList();
@@ -115,24 +117,31 @@ namespace CustomHierarchy
         private static void AddMenuItemForTag(GenericMenu menu, string menuPath, string tag)
         {
             // the menu item is marked as selected if it matches the current value of m_Color
-            menu.AddItem(new GUIContent(menuPath), CustomHierarchyEditor.CurrentGameObject.CompareTag(tag), OnTagSelected, tag);
+            menu.AddItem(new GUIContent(menuPath), lastObject.CompareTag(tag), OnTagSelected, tag);
         }
         
         private static void OnTagSelected(object userdata)
         {
-            CustomHierarchyEditor.CurrentGameObject.tag = (string)userdata;
+            lastObject.tag = (string)userdata;
+            lastObject = null;
         }
         
         private static void AddMenuItemForLayer(GenericMenu menu, string menuPath, string layer)
         {
             // the menu item is marked as selected if it matches the current value of m_Color
-            string currentLayer = LayerMask.LayerToName(CustomHierarchyEditor.CurrentGameObject.layer);
+            string currentLayer = LayerMask.LayerToName(lastObject.layer);
             menu.AddItem(new GUIContent(menuPath), currentLayer.Equals(layer), OnLayerSelected, layer);
         }
 
         private static void OnLayerSelected(object userdata)
         {
-            CustomHierarchyEditor.CurrentGameObject.layer = LayerMask.NameToLayer((string)userdata);
+            lastObject.layer = LayerMask.NameToLayer((string)userdata);
+            lastObject = null;
+        }
+        
+        protected override bool IsValid()
+        {
+            return !base.IsValid();
         }
     }
 }

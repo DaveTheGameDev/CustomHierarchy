@@ -26,6 +26,7 @@ namespace CustomHierarchy
             public Color outlineColor;
             public Color headerColor;
             public Color fontColor;
+            public Color selectionColor;
             
             public int outlineSize;
             public int fontSize;
@@ -38,6 +39,7 @@ namespace CustomHierarchy
             public float headerXEndOffset;
            
             public int tagFontSize;
+            public Color headerHoverColor;
         }
 
         private static string MyCustomSettingsPath = null;
@@ -66,18 +68,21 @@ namespace CustomHierarchy
                 
                 settings.showOutline = true;
                 settings.outlineSize = 1;
-                settings.outlineColor = Color.black;
                 
-                settings.headerColor = Color.grey;
                 settings.headerXEndOffset = 20;
                 settings.headerXStartOffset = 60;
                 settings.textAnchor = TextAnchor.MiddleCenter;
+                settings.fontStyle = FontStyle.Bold;
                 
-                settings.fontSize = 14;
+                settings.fontSize = 12;
+                settings.tagFontSize = 7;
+                
+                settings.outlineColor = new Color(0.61f, 0.61f, 0.61f);
                 settings.fontColor = Color.black;
+                settings.headerColor = new Color(0.76f, 0.76f, 0.76f);
+                settings.headerHoverColor = new Color(0.7f, 0.7f, 0.7f);
+                settings.selectionColor = new Color(0.23f, 0.45f, 0.69f);
 
-                settings.tagFontSize = 8;
-                
                 settings.styleState = new GUIStyleState {textColor = settings.fontColor};
 
                 ApplyTextStyles();
@@ -128,14 +133,17 @@ namespace CustomHierarchy
                         
                         
                         settings.showOutline = EditorGUILayout.Toggle("Show Outline", settings.showOutline);
-                        settings.outlineColor = EditorGUILayout.ColorField(new GUIContent("Outline Color"), settings.outlineColor, true, false, false);
+                        
                         settings.outlineSize = EditorGUILayout.IntSlider("Outline Size", settings.outlineSize, 1, 5);
                         
-                        settings.headerColor = EditorGUILayout.ColorField(new GUIContent("Header Color"), settings.headerColor, true, false, false);
-                        settings.headerXStartOffset = EditorGUILayout.FloatField("header X Start Offset", settings.headerXStartOffset);
-                        settings.headerXEndOffset = EditorGUILayout.FloatField("Header X End Offset", settings.headerXEndOffset);
                         
-                        settings.fontColor = EditorGUILayout.ColorField(new GUIContent("Font Color"), settings.fontColor, true, false, false);
+                        // settings.headerXStartOffset = EditorGUILayout.FloatField("Header X Start Offset", settings.headerXStartOffset);
+                        // settings.headerXEndOffset = EditorGUILayout.FloatField("Header X End Offset", settings.headerXEndOffset);
+                        settings.headerColor = EditorGUILayout.ColorField(new GUIContent("Header Color"), settings.headerColor, true, false, false);
+                        settings.outlineColor = EditorGUILayout.ColorField(new GUIContent("Outline Color"), settings.outlineColor, true, false, false);
+                        settings.fontColor = EditorGUILayout.ColorField(new GUIContent("Header Font Color"), settings.fontColor, true, false, false);
+                        settings.selectionColor = EditorGUILayout.ColorField(new GUIContent("Header Selection Color"), settings.selectionColor, true, false, false);
+                        settings.headerHoverColor = EditorGUILayout.ColorField(new GUIContent("Header Hover Color"), settings.headerHoverColor, true, false, false);
                         settings.fontSize = EditorGUILayout.IntSlider("Header Font Size", settings.fontSize, 1, 20);
                         settings.tagFontSize = EditorGUILayout.IntSlider("Tag Font Size", settings.tagFontSize, 1, 20);
          

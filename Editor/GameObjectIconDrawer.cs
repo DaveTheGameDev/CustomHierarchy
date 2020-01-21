@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace CustomHierarchy
 {
-    public class GameObjectIconDrawer : IconBase
+    public class GameObjectIconDrawer : CustomHierarchyDrawer
     {
+        protected override string ValidObjectNamePrefix { get; }
+        
         private const string IgnoredIcons = "GameObject Icon, Prefab Icon";
         private static GameObject lastGameObject;
         
@@ -15,7 +17,10 @@ namespace CustomHierarchy
                 return;
             
             var image = EditorGUIUtility.ObjectContent( CustomHierarchyEditor.CurrentGameObject, null);
-            rect.x = 35;
+            rect.width = 14;
+            rect.height = 14;
+            rect.x = 34;
+            rect.y += 1;
 
             if (lastGameObject && Event.current.commandName == "ObjectSelectorClosed")
             {

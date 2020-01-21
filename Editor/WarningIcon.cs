@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace CustomHierarchy
 {
-    public class WarningIcon : IconBase
+    public class WarningIcon : CustomHierarchyDrawer
     {
+        protected override string ValidObjectNamePrefix { get; }
+        
         private static Texture2D warningComponent;
 
         public WarningIcon()
@@ -16,16 +18,9 @@ namespace CustomHierarchy
         {
             if (!CustomHierarchySettings.settings.showMissingScriptIcon || !CustomHierarchyEditor.CurrentGameObject)
                 return;
-
-            // if (!CustomHierarchySettings.settings.showEnabledIcon)
-            // {
-            //     rect.x = Screen.width - 30;
-            // }
-            // else
-            // {
-            //     rect.x = Screen.width - 45;
-            // }
-
+            
+            rect.width = 14;
+            rect.height = 14;
             rect.x = Screen.width - 60;
             
             foreach (var script in CustomHierarchyEditor.CurrentGameObject.GetComponentsInChildren<MonoBehaviour>())
