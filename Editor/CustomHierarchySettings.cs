@@ -27,6 +27,9 @@ namespace CustomHierarchy
             public Color headerColor;
             public Color fontColor;
             public Color selectionColor;
+
+            public float headerXOffset;
+            public float iconXOffset;
             
             public int outlineSize;
             public int fontSize;
@@ -73,6 +76,9 @@ namespace CustomHierarchy
                 settings.headerXStartOffset = 60;
                 settings.textAnchor = TextAnchor.MiddleCenter;
                 settings.fontStyle = FontStyle.Bold;
+                
+                settings.headerXOffset = 30;
+                settings.iconXOffset = 4;
                 
                 settings.fontSize = 12;
                 settings.tagFontSize = 7;
@@ -135,10 +141,10 @@ namespace CustomHierarchy
                         settings.showOutline = EditorGUILayout.Toggle("Show Outline", settings.showOutline);
                         
                         settings.outlineSize = EditorGUILayout.IntSlider("Outline Size", settings.outlineSize, 1, 5);
+ 
+                        settings.headerXOffset = EditorGUILayout.FloatField("Header X Start Offset", settings.headerXOffset);
+                        settings.iconXOffset = EditorGUILayout.FloatField("Icon X End Offset", settings.iconXOffset);
                         
-                        
-                        // settings.headerXStartOffset = EditorGUILayout.FloatField("Header X Start Offset", settings.headerXStartOffset);
-                        // settings.headerXEndOffset = EditorGUILayout.FloatField("Header X End Offset", settings.headerXEndOffset);
                         settings.headerColor = EditorGUILayout.ColorField(new GUIContent("Header Color"), settings.headerColor, true, false, false);
                         settings.outlineColor = EditorGUILayout.ColorField(new GUIContent("Outline Color"), settings.outlineColor, true, false, false);
                         settings.fontColor = EditorGUILayout.ColorField(new GUIContent("Header Font Color"), settings.fontColor, true, false, false);

@@ -68,6 +68,7 @@ namespace CustomHierarchy
             GUI.changed = false;
 
             EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
+            rect.y -= 1;
             GUI.Button(rect, text, CustomHierarchyEditor.LayerStyle);
             
             if (GUI.changed)
@@ -89,6 +90,7 @@ namespace CustomHierarchy
             GUI.changed = false;
 
             EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
+            rect.y -= 1;
             GUI.Button(rect, text, CustomHierarchyEditor.LayerStyle);
 
             if (GUI.changed)

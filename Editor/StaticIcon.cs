@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,17 +25,16 @@ namespace CustomHierarchy
             if(!CustomHierarchySettings.settings.showStaticFlags)
                 return;
             
-            rect.width = 12;
-            rect.height = 12;
-            rect.y += 2;
-            rect.x = Screen.width - 47;
+            rect.width = 10;
+            rect.height = 10;
+            rect.y += 3;
+            rect.x = Screen.width -50;
             
             DrawActiveButton(rect, CustomHierarchyEditor.CurrentGameObject, new GUIContent(staticIcon));
         }
         
         private static void DrawActiveButton(Rect rect, GameObject gameObject, GUIContent texture)
         {
-#if UNITY_2019_3
             EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
             
             GUI.changed = false;
@@ -61,18 +59,14 @@ namespace CustomHierarchy
                 
                 foreach (string layer in flagNames)
                 {
-#if UNITY_2019_3
                     if(layer == "LightmapStatic")
                         continue;
-#endif
                     AddMenuItem(menu, layer, layer);
                 }
     
                 menu.ShowAsContext();
             }
-#else
  GUI.DrawTexture(rect, texture.image);
-#endif
         }
         
         private static void AddMenuItem(GenericMenu menu, string menuPath, string flag)
@@ -86,13 +80,19 @@ namespace CustomHierarchy
             
             if (flag == "Everything")
             {
-                StaticEditorFlags editorFlags = StaticEditorFlags.ContributeGI |
-                                                StaticEditorFlags.OccludeeStatic |
-                                                StaticEditorFlags.OccluderStatic |
-                                                StaticEditorFlags.BatchingStatic |
-                                                StaticEditorFlags.NavigationStatic |
-                                                StaticEditorFlags.OffMeshLinkGeneration |
-                                                StaticEditorFlags.ReflectionProbeStatic;
+                StaticEditorFlags editorFlags =
+                    StaticEditorFlags.OccludeeStatic |
+                    StaticEditorFlags.OccluderStatic |
+                    StaticEditorFlags.BatchingStatic |
+                    StaticEditorFlags.NavigationStatic |
+                    StaticEditorFlags.OffMeshLinkGeneration |
+                    StaticEditorFlags.ReflectionProbeStatic;
+                
+ #if UNITY_2019_3
+                editorFlags |= StaticEditorFlags.ContributeGI;
+#else
+                editorFlags |= StaticEditorFlags.LightmapStatic;
+#endif
 
                 bool hasAll = flags == editorFlags;
                 menu.AddItem(new GUIContent(menuPath), hasAll, OnTagSelected, flag);
@@ -111,14 +111,19 @@ namespace CustomHierarchy
 
            if ((string) userdata == "Everything")
            {
-               flags = 
-                        StaticEditorFlags.ContributeGI |
-                        StaticEditorFlags.OccludeeStatic|
+               flags =
+                   StaticEditorFlags.OccludeeStatic|
                         StaticEditorFlags.OccluderStatic|
                         StaticEditorFlags.BatchingStatic |
                         StaticEditorFlags.NavigationStatic |
                         StaticEditorFlags.OffMeshLinkGeneration |
                         StaticEditorFlags.ReflectionProbeStatic;
+               
+#if UNITY_2019_3
+                flags |= StaticEditorFlags.ContributeGI;
+#else
+               flags |= StaticEditorFlags.LightmapStatic;
+#endif
            }
            else if ((string) userdata == "Nothing")
            {

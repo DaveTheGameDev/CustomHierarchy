@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,18 +18,19 @@ namespace CustomHierarchy
                 return;
             
             var image = EditorGUIUtility.ObjectContent( CustomHierarchyEditor.CurrentGameObject, null);
-            rect.width = 14;
-            rect.height = 14;
-            rect.x = 34;
-            rect.y += 1;
-
+            
+            rect.width = 12;
+            rect.height = 12;
+            rect.x = CustomHierarchySettings.settings.iconXOffset;
+            rect.y += 2;
+            
             if (lastGameObject && Event.current.commandName == "ObjectSelectorClosed")
             {
                 Texture2D newIcon = (Texture2D)EditorGUIUtility.GetObjectPickerObject();
                 
-                var ty = typeof( EditorGUIUtility );
-                var mi = ty.GetMethod( "SetIconForObject", BindingFlags.NonPublic | BindingFlags.Static );
-                mi.Invoke( null, new object[] { lastGameObject, newIcon } );
+                Type ty = typeof( EditorGUIUtility );
+                MethodInfo methodInfo = ty.GetMethod( "SetIconForObject", BindingFlags.NonPublic | BindingFlags.Static );
+                if (methodInfo != null) methodInfo?.Invoke(null, new object[] {lastGameObject, newIcon});
 
                 lastGameObject = null;
             }

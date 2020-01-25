@@ -15,7 +15,7 @@ namespace CustomHierarchy
             
             Rect wholeRect = new Rect(rect);
             rect.width = Screen.width;
-            rect.x = 60;
+            rect.x = CustomHierarchySettings.settings.headerXOffset;
             wholeRect.width = Screen.width;
             wholeRect.x = 0;
                 

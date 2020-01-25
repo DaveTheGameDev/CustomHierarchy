@@ -1,9 +1,5 @@
-﻿using System;
-using System.Reflection;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
-using UnityEngine.Diagnostics;
-using Utils = UnityEngine.TestTools.Utils.Utils;
 
 namespace CustomHierarchy
 {
