@@ -91,7 +91,7 @@ namespace CustomHierarchy
  #if UNITY_2019_3
                 editorFlags |= StaticEditorFlags.ContributeGI;
 #else
-                editorFlags |= StaticEditorFlags.LightmapStatic;
+                editorFlags |= StaticEditorFlags.ContributeGI;
 #endif
 
                 bool hasAll = flags == editorFlags;
@@ -122,7 +122,7 @@ namespace CustomHierarchy
 #if UNITY_2019_3
                 flags |= StaticEditorFlags.ContributeGI;
 #else
-               flags |= StaticEditorFlags.LightmapStatic;
+               flags |= StaticEditorFlags.ContributeGI;
 #endif
            }
            else if ((string) userdata == "Nothing")

@@ -19,13 +19,14 @@ namespace CustomHierarchy
             //Order here matters.
             Icons = new CustomHierarchyDrawer[]
             {
-                new HeaderDrawer(),
+                
                 new WarningIcon(),
                 new EnabledIcon(), 
                 new LayerTagDrawer(),
                 new GameObjectIconDrawer(),
-                new OutlineDrawer(),
-                new StaticIcon()
+                new StaticIcon(),
+                new HeaderDrawer(),
+                new OutlineDrawer()
             };
 
             CustomHierarchySettings.Load();

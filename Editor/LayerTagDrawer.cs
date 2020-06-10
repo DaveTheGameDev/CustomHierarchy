@@ -9,15 +9,29 @@ namespace CustomHierarchy
         protected override string ValidObjectNamePrefix => "---";
         
         private static GameObject lastObject;
+        private static Texture2D tagIcon;
+        private static Texture2D layerIcon;
+        
+        public LayerTagDrawer()
+        {
+            tagIcon = Resources.Load<Texture2D>("tag");
+            layerIcon = Resources.Load<Texture2D>("layer");
+        }
+        
         public override void DrawGUI(Rect rect)
         {
             if(!IsValid())
                 return;
             
-            rect.x = Screen.width - 115;
-            rect.width = 50;
+            rect.width = 10;
+            rect.height = 10;
+            rect.y += 10;
+            rect.x = Screen.width -65;
                 
             DrawTag(rect);
+            
+            rect.x = Screen.width -80;
+            rect.y -= 7;
             DrawLayer(rect);
         }
 
@@ -26,20 +40,7 @@ namespace CustomHierarchy
             if (!CustomHierarchySettings.settings.showLayer) 
                 return;
             
-
-            string layer = LayerMask.LayerToName(CustomHierarchyEditor.CurrentGameObject.layer);
-
-            Color c = GUI.color;
-            if (layer == "Default")
-            {
-                if(!CustomHierarchySettings.settings.showDefaultLayer)
-                    return;
-                
-                GUI.color = new Color(c.r,c.g,c.b, c.a * 0.5f);
-            }
-
-            DrawLayerWithMenu(rect, layer);
-            GUI.color = c;
+            DrawLayerWithMenu(rect);
         }
 
         private static void DrawTag(Rect rect)
@@ -47,29 +48,16 @@ namespace CustomHierarchy
             if (CustomHierarchySettings.settings.showTag)
             {
                 rect.y -= 7;
-
-                Color c = GUI.color;
-                
-                if (CustomHierarchyEditor.CurrentGameObject.CompareTag("Untagged"))
-                {
-                    if(!CustomHierarchySettings.settings.showDefaultTag)
-                        return;
-                    
-                    GUI.color = new Color(c.r,c.g,c.b, c.a * 0.5f);
-                }
-                
-                DrawTagWithMenu(rect, CustomHierarchyEditor.CurrentGameObject.tag);
-                GUI.color = c;
+                DrawTagWithMenu(rect);
             }
         }
 
-        private static void DrawTagWithMenu(Rect rect, string text)
+        private static void DrawTagWithMenu(Rect rect)
         {
             GUI.changed = false;
 
             EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
-            rect.y -= 1;
-            GUI.Button(rect, text, CustomHierarchyEditor.LayerStyle);
+            GUI.Button(rect, new GUIContent(tagIcon), GUIStyle.none);
             
             if (GUI.changed)
             {
@@ -85,13 +73,13 @@ namespace CustomHierarchy
             }
         }
         
-        private static void DrawLayerWithMenu(Rect rect, string text)
+        private static void DrawLayerWithMenu(Rect rect)
         {
             GUI.changed = false;
 
             EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
             rect.y -= 1;
-            GUI.Button(rect, text, CustomHierarchyEditor.LayerStyle);
+            GUI.Button(rect, new GUIContent(layerIcon), GUIStyle.none);
 
             if (GUI.changed)
             {
